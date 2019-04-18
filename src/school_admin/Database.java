@@ -64,8 +64,9 @@ class Database {
                 String nomRue = rs.getString("nom_rue");
                 String codePostale = rs.getString("code_postal");
                 String ville = rs.getString("ville");
+                int numeroGroupe = rs.getInt("numero_groupe");
 
-                etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville));
+                etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, numeroGroupe));
             }
         } catch (SQLException e) { System.out.println(e); return null; }
 
