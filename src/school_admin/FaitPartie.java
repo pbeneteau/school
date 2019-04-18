@@ -3,25 +3,36 @@ package school_admin;
 
 public class FaitPartie {
 
-  private long numeroGroupe;
-  private long matricule;
+  private int numeroGroupe;
+  private int matricule;
 
+  public FaitPartie(int numeroGroupe, int matricule) {
+    this.numeroGroupe = numeroGroupe;
+    this.matricule = matricule;
+  }
 
-  public long getNumeroGroupe() {
+  public int getNumeroGroupe() {
     return numeroGroupe;
   }
 
-  public void setNumeroGroupe(long numeroGroupe) {
+  public void setNumeroGroupe(int numeroGroupe) {
     this.numeroGroupe = numeroGroupe;
   }
 
 
-  public long getMatricule() {
+  public int getMatricule() {
     return matricule;
   }
 
-  public void setMatricule(long matricule) {
+  public void setMatricule(int matricule) {
     this.matricule = matricule;
   }
 
+  @Override
+  public String toString() {
+    return "FaitPartie{" +
+            "numeroGroupe=" + numeroGroupe +
+            ", matricule=" + matricule +
+            '}';
+  }
 }
