@@ -66,11 +66,29 @@ class Database {
                 String ville = rs.getString("ville");
                 int numeroGroupe = rs.getInt("numero_groupe");
 
-                etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, numeroGroupe));
+                getGroupCourse(numeroGroupe);
+
+                //int numeroGroupe = rs.getInt("numero_groupe");
+
+                etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, new GroupeEleve(1)));
             }
         } catch (SQLException e) { System.out.println(e); return null; }
 
         return etudiants;
+    }
+
+    static void getGroupCourse(int numeroGroupe) {
+
+        try {
+
+            Statement stmt = Database.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from Groupe_eleve where " + numeroGroupe + "= numero_groupe");
+
+            rs.first();
+            System.out.println(rs.getInt("numero_groupe"));
+            System.out.println(rs.getInt("numero_cours"));
+
+        } catch (SQLException e) { System.out.println(e); }
     }
 
     static ArrayList<Cours> getCours() {

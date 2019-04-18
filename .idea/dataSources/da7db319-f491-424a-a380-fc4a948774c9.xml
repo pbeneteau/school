@@ -1099,11 +1099,15 @@ code</ColNames>
     <column id="270" parent="233" name="nom">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="271" parent="233" name="prenom">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="272" parent="233" name="sexe">
@@ -1162,212 +1166,222 @@ code</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="281" parent="233" name="PRIMARY">
+    <column id="281" parent="233" name="numero_groupe">
+      <Position>13</Position>
+      <DataType>int(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="282" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>matricule</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="282" parent="234" name="numeroGroupe">
+    <column id="283" parent="234" name="numero_groupe">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="283" parent="234" name="PRIMARY">
+    <column id="284" parent="234" name="numero_cours">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="285" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>numeroGroupe</ColNames>
+      <ColNames>numero_groupe</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="284" parent="235" name="num">
+    <column id="286" parent="235" name="num">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="235" name="prenom">
+    <column id="287" parent="235" name="prenom">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="235" name="nom">
+    <column id="288" parent="235" name="nom">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="235" name="email">
+    <column id="289" parent="235" name="email">
       <Position>4</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="235" name="tel">
+    <column id="290" parent="235" name="tel">
       <Position>5</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="235" name="numero_rue">
+    <column id="291" parent="235" name="numero_rue">
       <Position>6</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="235" name="nom_rue">
+    <column id="292" parent="235" name="nom_rue">
       <Position>7</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="235" name="ville">
+    <column id="293" parent="235" name="ville">
       <Position>8</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="235" name="pays">
+    <column id="294" parent="235" name="pays">
       <Position>9</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="235" name="code_postal">
+    <column id="295" parent="235" name="code_postal">
       <Position>10</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="294" parent="235" name="PRIMARY">
+    <key id="296" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>num</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="295" parent="236" name="matricule">
+    <column id="297" parent="236" name="matricule">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="236" name="nom">
+    <column id="298" parent="236" name="nom">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="236" name="prenom">
+    <column id="299" parent="236" name="prenom">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="236" name="numero_rue">
+    <column id="300" parent="236" name="numero_rue">
       <Position>4</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="236" name="nom_rue">
+    <column id="301" parent="236" name="nom_rue">
       <Position>5</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="236" name="code_postal">
+    <column id="302" parent="236" name="code_postal">
       <Position>6</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="236" name="ville">
+    <column id="303" parent="236" name="ville">
       <Position>7</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="236" name="tel">
+    <column id="304" parent="236" name="tel">
       <Position>8</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="236" name="email">
+    <column id="305" parent="236" name="email">
       <Position>9</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="304" parent="236" name="PRIMARY">
+    <key id="306" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>matricule</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="305" parent="237" name="matricule">
+    <column id="307" parent="237" name="matricule">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="237" name="num">
+    <column id="308" parent="237" name="num">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="307" parent="237" name="est_responsable_Personne_responsable0_FK">
+    <index id="309" parent="237" name="est_responsable_Personne_responsable0_FK">
       <ColNames>num</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="308" parent="237" name="PRIMARY">
+    <key id="310" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>matricule
 num</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="309" parent="237" name="est_responsable_Etudiant_FK">
+    <foreign-key id="311" parent="237" name="est_responsable_Etudiant_FK">
       <ColNames>matricule</ColNames>
       <RefSchemaName>bdd</RefSchemaName>
       <RefTableName>Etudiant</RefTableName>
       <RefColNames>matricule</RefColNames>
     </foreign-key>
-    <foreign-key id="310" parent="237" name="est_responsable_Personne_responsable0_FK">
+    <foreign-key id="312" parent="237" name="est_responsable_Personne_responsable0_FK">
       <ColNames>num</ColNames>
       <RefSchemaName>bdd</RefSchemaName>
       <RefTableName>Personne_responsable</RefTableName>
       <RefColNames>num</RefColNames>
     </foreign-key>
-    <column id="311" parent="238" name="numeroGroupe">
+    <column id="313" parent="238" name="numero_groupe">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="238" name="matricule">
+    <column id="314" parent="238" name="matricule">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="313" parent="238" name="fais_partie_Etudiant0_FK">
+    <index id="315" parent="238" name="fait_partie_Etudiant0_FK">
       <ColNames>matricule</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="314" parent="238" name="PRIMARY">
+    <key id="316" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>numeroGroupe
+      <ColNames>numero_groupe
 matricule</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="315" parent="238" name="fais_partie_GroupeEleve_FK">
-      <ColNames>numeroGroupe</ColNames>
+    <foreign-key id="317" parent="238" name="fait_partie_GroupeEleve_FK">
+      <ColNames>numero_groupe</ColNames>
       <RefSchemaName>bdd</RefSchemaName>
       <RefTableName>Groupe_eleve</RefTableName>
-      <RefColNames>numeroGroupe</RefColNames>
+      <RefColNames>numero_groupe</RefColNames>
     </foreign-key>
-    <foreign-key id="316" parent="238" name="fais_partie_Etudiant0_FK">
+    <foreign-key id="318" parent="238" name="fait_partie_Etudiant0_FK">
       <ColNames>matricule</ColNames>
       <RefSchemaName>bdd</RefSchemaName>
       <RefTableName>Etudiant</RefTableName>

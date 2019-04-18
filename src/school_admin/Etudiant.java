@@ -17,10 +17,10 @@ public class Etudiant {
   private String nomRue;
   private String codePostale;
   private String ville;
-  private int numeroGroupe;
+  private GroupeEleve group;
 
 
-  Etudiant(int matricule, String nom, String prenom, String sexe, Date dateNaissance, String paysNaissance, String villeNaissance, String photo, String numeroRue, String nomRue, String codePostale, String ville, int numeroGroupe) {
+  Etudiant(int matricule, String nom, String prenom, String sexe, Date dateNaissance, String paysNaissance, String villeNaissance, String photo, String numeroRue, String nomRue, String codePostale, String ville, GroupeEleve group) {
     this.matricule = matricule;
     this.nom = nom;
     this.prenom = prenom;
@@ -33,7 +33,7 @@ public class Etudiant {
     this.nomRue = nomRue;
     this.codePostale = codePostale;
     this.ville = ville;
-    this.numeroGroupe = numeroGroupe;
+    this.group = group;
   }
 
   public int getMatricule() {
@@ -143,12 +143,12 @@ public class Etudiant {
     this.ville = ville;
   }
 
-  public int getNumeroGroupe() {
-    return numeroGroupe;
+  public GroupeEleve getGroup() {
+    return group;
   }
 
-  public void setNumeroGroupe(int numeroGroupe) {
-    this.numeroGroupe = numeroGroupe;
+  public void setGroup(GroupeEleve group) {
+    this.group = group;
   }
 
   @Override
@@ -166,7 +166,7 @@ public class Etudiant {
             ", nomRue='" + nomRue + '\'' +
             ", codePostale='" + codePostale + '\'' +
             ", ville='" + ville + '\'' +
-            ", numeroGroupe=" + numeroGroupe +
+            ", numeroGroupe=" + group.toString() +
             '}';
   }
 }
