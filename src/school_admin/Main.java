@@ -43,7 +43,7 @@ public class Main {
         else
             System.out.println("Professeurs: Erreur");
 
-        System.out.println("Done. bande de putes");
+        System.out.println("Done.");
     }
 
 
