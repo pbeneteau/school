@@ -65,19 +65,18 @@ class Database {
                 String codePostale = rs.getString("code_postal");
                 String ville = rs.getString("ville");
                 int numeroGroupe = rs.getInt("numero_groupe");
+                GroupeEleve groupe = getGroup(numeroGroupe);
 
-                getGroupCourse(numeroGroupe);
-
-                //int numeroGroupe = rs.getInt("numero_groupe");
-
-                etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, new GroupeEleve(1)));
+                etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, groupe));
             }
         } catch (SQLException e) { System.out.println(e); return null; }
 
         return etudiants;
     }
 
-    static void getGroupCourse(int numeroGroupe) {
+    static GroupeEleve getGroup(int numeroGroupe) {
+
+        GroupeEleve groupe;
 
         try {
 
@@ -85,10 +84,38 @@ class Database {
             ResultSet rs = stmt.executeQuery("select * from Groupe_eleve where " + numeroGroupe + "= numero_groupe");
 
             rs.first();
-            System.out.println(rs.getInt("numero_groupe"));
-            System.out.println(rs.getInt("numero_cours"));
+            Cours cours = getCourse(rs.getInt("numero_cours"));
+            groupe = new GroupeEleve(numeroGroupe, cours);
 
-        } catch (SQLException e) { System.out.println(e); }
+        } catch (SQLException e) { System.out.println(e); return null;}
+
+        return groupe;
+    }
+
+    static Cours getCourse(int numeroCours) {
+
+        Cours cours;
+
+        try {
+
+            Statement stmt = Database.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from Cours where " + numeroCours + "= code");
+
+            rs.first();
+            int code = rs.getInt("code");
+            String nom = rs.getString("nom");
+            String description = rs.getString("description");
+            java.sql.Date date = rs.getDate("date");
+            double coefficient = rs.getFloat("coefficient");
+            double coefficientDE = rs.getFloat("coefficient_de");
+            double coefficientTP = rs.getFloat("coefficient_tp");
+            double coefficientProjet = rs.getFloat("coefficient_projet");
+
+            cours = new Cours(code, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet);
+
+        } catch (SQLException e) { System.out.println(e); return null; }
+
+        return cours;
     }
 
     static ArrayList<Cours> getCours() {

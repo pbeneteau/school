@@ -4,7 +4,7 @@ package school_admin;
 public class Assister {
 
   private long matricule;
-  private long code;
+  private int code;
   private double noteDe;
   private double noteTp;
   private double notePjr;
@@ -23,10 +23,9 @@ public class Assister {
     return code;
   }
 
-  public void setCode(long code) {
+  public void setCode(int code) {
     this.code = code;
   }
-
 
   public double getNoteDe() {
     return noteDe;

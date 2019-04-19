@@ -1,5 +1,7 @@
 package school_admin;
 
+import com.mysql.cj.jdbc.SuspendableXAConnection;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -28,6 +30,8 @@ public class Main {
             System.out.println("Etudiant: OK");
         else
             System.out.println("Etudiant: Erreur");
+
+        System.out.println(etudiants.get(0).getGroup().toString());
 
         // Create an ArrayList cours
         ArrayList<Cours> cours = Database.getCours();

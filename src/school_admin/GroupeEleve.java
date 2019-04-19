@@ -4,9 +4,11 @@ package school_admin;
 public class GroupeEleve {
 
   private int numeroGroupe;
+  private Cours cours;
 
-  public GroupeEleve(int numeroGroupe) {
+  GroupeEleve(int numeroGroupe, Cours cours) {
     this.numeroGroupe = numeroGroupe;
+    this.cours = cours;
   }
 
   public int getNumeroGroupe() {
@@ -17,10 +19,19 @@ public class GroupeEleve {
     this.numeroGroupe = numeroGroupe;
   }
 
+  public Cours getCours() {
+    return cours;
+  }
+
+  public void setCours(Cours cours) {
+    this.cours = cours;
+  }
+
   @Override
   public String toString() {
-    return "GroupeEleve{" +
+    return "GroupeEleve {" +
             "numeroGroupe=" + numeroGroupe +
+            ", cours: " + cours.toString() +
             '}';
   }
 }
