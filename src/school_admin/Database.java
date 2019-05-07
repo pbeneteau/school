@@ -65,7 +65,8 @@ class Database {
                 String codePostale = rs.getString("code_postal");
                 String ville = rs.getString("ville");
                 int numeroGroupe = rs.getInt("numero_groupe");
-                GroupeEleve groupe = getGroup(numeroGroupe);
+                GroupeEleve groupe = getGroupe(numeroGroupe);
+
 
                 etudiants.add(new Etudiant(matricule, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, groupe));
             }
@@ -74,7 +75,7 @@ class Database {
         return etudiants;
     }
 
-    static GroupeEleve getGroup(int numeroGroupe) {
+    static GroupeEleve getGroupe(int numeroGroupe) {
 
         GroupeEleve groupe;
 
@@ -84,15 +85,33 @@ class Database {
             ResultSet rs = stmt.executeQuery("select * from Groupe_eleve where " + numeroGroupe + "= numero_groupe");
 
             rs.first();
-            Cours cours = getCourse(rs.getInt("numero_cours"));
+            Cours cours = getCours(rs.getInt("numero_cours"));
             groupe = new GroupeEleve(numeroGroupe, cours);
+
+
 
         } catch (SQLException e) { System.out.println(e); return null;}
 
         return groupe;
     }
 
-    static Cours getCourse(int numeroCours) {
+    static boolean getNotesEtudiant (int matriculeEtudiant) {
+
+        try {
+
+            String query = "select note_de, note_tp, note_pjr from Assister where matricule = (?)";
+
+            PreparedStatement stmt = Database.connection.prepareStatement(query);
+            stmt.setInt(1, matriculeEtudiant);
+            stmt.execute(query);
+
+        } catch (SQLException e) { System.out.println(e); return false; }
+
+        return true;
+    }
+
+
+    static Cours getCours(int numeroCours) {
 
         Cours cours;
 
@@ -204,73 +223,60 @@ class Database {
     }
 
 
-    static boolean CreateGroup (int numero_groupe, int numero_cours) {
+    static boolean creerGroupe (int numero_groupe, int numero_cours) {
 
         try {
-            Statement stmt = Database.connection.createStatement();
-
 
             String queryg = "Insert into Groupe_eleve ( numero_groupe, numero_cours)"
                     + " values (?, ?)";
 
-            //
             PreparedStatement preparedStmt = connection.prepareStatement(queryg);
+
             preparedStmt.setInt(1, numero_groupe);
             preparedStmt.setInt(2, numero_cours);
 
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        }
+            preparedStmt.execute();
+
+        } catch (SQLException e) { System.out.println(e); return false; }
+
         return true;
     }
 
 
-    static boolean MajEleveDuGroup (int numero_groupe) {
+    static boolean majEleveGroup (int numero_groupe) {
 
         try {
 
             Statement stmt = Database.connection.createStatement();
 
 
-            String queryg = "UPDATE Etudiant set numero_groupe = ? ";
-            PreparedStatement preparedStmt = connection.prepareStatement(queryg);
+            String query = "UPDATE Etudiant set numero_groupe = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setInt(1, numero_groupe);
 
             preparedStmt.executeUpdate();
-            //
 
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        }
+        } catch (SQLException e) { System.out.println(e); return false; }
         return true;
     }
 
-    static boolean RemoveEleveDuGroup () {
+    static boolean retirerEleveGroup () {
 
         try {
 
-            Statement stmt = Database.connection.createStatement();
-
-
-            String queryg = "UPDATE Etudiant set numero_groupe = NULL";
-            PreparedStatement preparedStmt = connection.prepareStatement(queryg);
+            String query = "UPDATE Etudiant set numero_groupe = NULL";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             preparedStmt.executeUpdate();
-            //
 
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        }
+        } catch (SQLException e) { System.out.println(e); return false; }
+
         return true;
     }
 
 
 
-    static boolean CreateCours(int code, String nom, String description, String date, double coefficient, double coefficentDE, double coefficientTP, double coefficientProjet) {
-
+    static boolean creerCours(int code, String nom, String description, String date, double coefficient, double coefficentDE, double coefficientTP, double coefficientProjet) {
 
         try {
 
@@ -297,7 +303,7 @@ class Database {
 
 
 
-    static boolean AssociateCoursGroup(int codeCours) {
+    static boolean associateCoursGroup(int codeCours) {
 
         try {
 
@@ -315,7 +321,7 @@ class Database {
 
 
     // Association professeur a un cours
-    static boolean AssociateProfCours(int codeCours, int matriculeProf) {
+    static boolean associateProfCours(int codeCours, int matriculeProf) {
 
         try {
 
@@ -328,8 +334,8 @@ class Database {
 
             preparedStmt.execute();
 
-        }
-        catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) { System.out.println(e); return false; }
+
         return true;
     }
 
@@ -338,11 +344,10 @@ class Database {
 
         try {
 
-            Statement stmt = Database.connection.createStatement();
-
             String query = "INSERT into Assister (matricule, code ,note_de, note_tp, note_pjr)" + "values (?,?,?,?,?)";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
+
             preparedStmt.setInt(1, codeCours);
             preparedStmt.setInt(2, matriculeProf);
             preparedStmt.setDouble(3, note_de);
@@ -357,43 +362,25 @@ class Database {
     }
 
 
-    // mise a jour unquement par personne scola sur demande prof
-    static boolean majNote (double note_de, double note_tp, double note_pjr) {
+    // mise a jour uniquement par personne scola sur demande prof
+    static boolean majNoteEleve (int matricule, double note_de, double note_tp, double note_pjr) {
 
         try {
 
-            Statement stmt = Database.connection.createStatement();
+            String query = "UPDATE Assister set note_de = ?, note_tp = ?, note_pjr = ? where matricule = ?";
 
-            String query = "UPDATE Assister set note_de = ?, note_tp = ? , note_pjr = ? ";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
+
             preparedStmt.setDouble(1, note_de);
             preparedStmt.setDouble(2, note_tp);
             preparedStmt.setDouble(3, note_pjr);
+            preparedStmt.setInt(4, matricule);
 
             preparedStmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-    }
-
-
-
-    static boolean releverNote (int matricule) {
-
-        try {
-
-            Statement stmt = Database.connection.createStatement();
-
-            String query = "select (note_de, note_tp, note_pjr) from Assister inner join Etudiant E on Assister.matricule = E.matricule ";
-            stmt.execute(query);
 
         } catch (SQLException e) { System.out.println(e); return false; }
 
         return true;
     }
-
 
 }

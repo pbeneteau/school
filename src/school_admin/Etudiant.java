@@ -2,6 +2,7 @@ package school_admin;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Etudiant {
 
@@ -18,9 +19,11 @@ public class Etudiant {
   private String codePostale;
   private String ville;
   private GroupeEleve group;
+  private ArrayList<Cours> cours;
 
 
   Etudiant(int matricule, String nom, String prenom, String sexe, Date dateNaissance, String paysNaissance, String villeNaissance, String photo, String numeroRue, String nomRue, String codePostale, String ville, GroupeEleve group) {
+
     this.matricule = matricule;
     this.nom = nom;
     this.prenom = prenom;

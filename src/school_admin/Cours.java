@@ -13,6 +13,9 @@ public class Cours {
   private double coefficientDe;
   private double coefficientTp;
   private double coefficientProjet;
+  private double noteDE;
+  private double noteTP;
+  private double noteProjet;
 
   Cours(int code, String nom, String description, Date date, double coefficient, double coefficientDe, double coefficientTp, double coefficientProjet) {
     this.code = code;
@@ -96,7 +99,6 @@ public class Cours {
     this.coefficientProjet = coefficientProjet;
   }
 
-
   @Override
   public String toString() {
     return "Cours{" +
@@ -108,6 +110,9 @@ public class Cours {
             ", coefficientDe=" + coefficientDe +
             ", coefficientTp=" + coefficientTp +
             ", coefficientProjet=" + coefficientProjet +
+            ", noteDE=" + noteDE +
+            ", noteTP=" + noteTP +
+            ", noteProjet=" + noteProjet +
             '}';
   }
 }
