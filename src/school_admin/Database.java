@@ -291,45 +291,61 @@ class Database {
             preparedStmt.setDouble(7, coefficientTP);
             preparedStmt.setDouble(8, coefficientProjet);
 
-            // Association d'un Cours à un groupe
-
-            String query2 = "Insert into Groupe_eleve(numero_cours)" + "values(?)";
-
-
-            // je sais pas si c'est util
-            ResultSet rs3=stmt.executeQuery("select code from Cours");
-
-            numeroCours = rs3.getInt("code");
-
-            PreparedStatement preparedStmt2 = connection.prepareStatement(query2);
-            preparedStmt.setInt(1,numeroCours);
-
-
-
-            // mettre numero de cours a tout les etudiants du groupe
-
-
-
-            // Association professeur a un cours
-
-            String query3 = "Insert into Enseigne ( matricule, code)"
-                    + " values (?, ?)";
-
-            // je sais pas si c'est util
-            ResultSet rs=stmt.executeQuery("select matricule from Professeur");
-
-            matriculeProf = rs.getInt("matricule");
-
-            PreparedStatement preparedStmt3 = connection.prepareStatement(query3);
-            preparedStmt.setInt(1, matriculeProf);
-            preparedStmt.setInt(2, code);
-
-
-            //renseigne sur type de note et coefficient
-
-
-            // execute the preparedstatement
             preparedStmt.execute();
+
+            connection.close();
+        }
+        catch (SQLException e) { System.out.println(e); return false; }
+        return true;
+    }
+
+            static boolean AssociateCoursGroup(int numeroCours){
+
+                try {
+
+                    Statement stmt = Database.connection.createStatement();
+                // Association d'un Cours à un groupe
+
+                String query2 = "Insert into Groupe_eleve(numero_cours)" + "values(?)";
+
+
+                // je sais pas si c'est util
+                ResultSet rs3=stmt.executeQuery("select code from Cours");
+
+                numeroCours = rs3.getInt("code");
+
+                //
+
+                PreparedStatement preparedStmt2 = connection.prepareStatement(query2);
+                preparedStmt2.setInt(1,numeroCours);
+
+                    connection.close();
+                }
+                catch (SQLException e) { System.out.println(e); return false; }
+                return true;
+
+            }
+
+
+    // Association professeur a un cours
+    static boolean AssociateProfCours(int code, int matriculeProf) {
+
+        try {
+
+            Statement stmt = Database.connection.createStatement();
+
+        String query3 = "Insert into Enseigne ( matricule, code)"
+                + " values (?, ?)";
+
+        // je sais pas si c'est util
+        ResultSet rs = stmt.executeQuery("select matricule from Professeur");
+
+        matriculeProf = rs.getInt("matricule");
+        //
+
+        PreparedStatement preparedStmt3 = connection.prepareStatement(query3);
+        preparedStmt3.setInt(1, matriculeProf);
+        preparedStmt3.setInt(2, code);
 
             connection.close();
         }
