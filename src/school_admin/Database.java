@@ -269,7 +269,7 @@ class Database {
 
 
 
-    static boolean CreateCours(int code, String nom, String description, String date, double coefficient, double coefficentDE, double coefficientTP, double coefficientProjet, int numeroCours, int matriculeProf, int numero_groupe) {
+    static boolean CreateCours(int code, String nom, String description, String date, double coefficient, double coefficentDE, double coefficientTP, double coefficientProjet) {
 
 
         try {
@@ -298,6 +298,8 @@ class Database {
         catch (SQLException e) { System.out.println(e); return false; }
         return true;
     }
+
+
 
             static boolean AssociateCoursGroup(int numeroCours){
 
