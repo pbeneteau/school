@@ -353,7 +353,7 @@ class Database {
         return true;
     }
 
-// gestion note uniquement par porof du cours
+    // gestion note uniquement par prof du cours
     static boolean saisieNote (double note_de, double note_tp, double note_pjr) {
 
         try {
