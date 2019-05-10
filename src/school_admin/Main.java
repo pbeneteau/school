@@ -2,6 +2,7 @@ package school_admin;
 
 import com.mysql.cj.jdbc.SuspendableXAConnection;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class Main {
@@ -15,39 +16,12 @@ public class Main {
         if (!success)
             return;
 
-        System.out.println("Fetching data...");
+        Etudiant etudiant;
 
-        // Create an ArrayList admins
-        ArrayList<Administrateur> administrateurs = Database.getAdmins();
-        if (administrateurs != null)
-            System.out.println("Admins: OK");
-        else
-            System.out.println("Admins: Erreur");
+        etudiant = Database.getEtudiant(20190001);
 
-        // Create an ArrayList etudiants
-        ArrayList<Etudiant> etudiants = Database.getEtudiant();
-        if (etudiants != null)
-            System.out.println("Etudiant: OK");
-        else
-            System.out.println("Etudiant: Erreur");
+        System.out.println(etudiant.toString());
 
-        System.out.println(etudiants.get(0).getGroup().toString());
-
-        // Create an ArrayList cours
-        ArrayList<Cours> cours = Database.getCours();
-        if (cours != null)
-            System.out.println("Cours: OK");
-        else
-            System.out.println("Cours: Erreur");
-
-        // Create an ArrayList professeurs
-        ArrayList<Professeur> professeurs = Database.getProfesseurs();
-        if (professeurs != null)
-            System.out.println("Professeurs: OK");
-        else
-            System.out.println("Professeurs: Erreur");
-
-        System.out.println("Done. hgjk");
     }
 
 

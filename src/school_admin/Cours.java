@@ -17,6 +17,20 @@ public class Cours {
   private double noteTP;
   private double noteProjet;
 
+  public Cours(int code, String nom, String description, Date date, double coefficient, double coefficientDe, double coefficientTp, double coefficientProjet, double noteDE, double noteTP, double noteProjet) {
+    this.code = code;
+    this.nom = nom;
+    this.description = description;
+    this.date = date;
+    this.coefficient = coefficient;
+    this.coefficientDe = coefficientDe;
+    this.coefficientTp = coefficientTp;
+    this.coefficientProjet = coefficientProjet;
+    this.noteDE = noteDE;
+    this.noteTP = noteTP;
+    this.noteProjet = noteProjet;
+  }
+
   Cours(int code, String nom, String description, Date date, double coefficient, double coefficientDe, double coefficientTp, double coefficientProjet) {
     this.code = code;
     this.nom = nom;

@@ -18,11 +18,12 @@ public class Etudiant {
   private String nomRue;
   private String codePostale;
   private String ville;
-  private GroupeEleve group;
   private ArrayList<Cours> cours;
+  private String tel;
+  private String email;
 
 
-  Etudiant(int matricule, String nom, String prenom, String sexe, Date dateNaissance, String paysNaissance, String villeNaissance, String photo, String numeroRue, String nomRue, String codePostale, String ville, GroupeEleve group) {
+  Etudiant(int matricule, String nom, String prenom, String sexe, Date dateNaissance, String paysNaissance, String villeNaissance, String photo, String numeroRue, String nomRue, String codePostale, String ville, ArrayList<Cours> cours, String tel, String email) {
 
     this.matricule = matricule;
     this.nom = nom;
@@ -36,7 +37,9 @@ public class Etudiant {
     this.nomRue = nomRue;
     this.codePostale = codePostale;
     this.ville = ville;
-    this.group = group;
+    this.cours = cours;
+    this.tel = tel;
+    this.email = email;
   }
 
   public int getMatricule() {
@@ -146,12 +149,20 @@ public class Etudiant {
     this.ville = ville;
   }
 
-  public GroupeEleve getGroup() {
-    return group;
+  public String getTel() {
+    return tel;
   }
 
-  public void setGroup(GroupeEleve group) {
-    this.group = group;
+  public void setTel(String tel) {
+    this.tel = tel;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   @Override
@@ -169,7 +180,9 @@ public class Etudiant {
             ", nomRue='" + nomRue + '\'' +
             ", codePostale='" + codePostale + '\'' +
             ", ville='" + ville + '\'' +
-            ", numeroGroupe=" + group.toString() +
+            ", cours=" + cours +
+            ", tel='" + tel + '\'' +
+            ", email='" + email + '\'' +
             '}';
   }
 }

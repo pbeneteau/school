@@ -1,10 +1,13 @@
 package school_admin;
 
 
+import java.util.ArrayList;
+
 public class GroupeEleve {
 
   private int numeroGroupe;
   private Cours cours;
+  private ArrayList<Etudiant> etudiants;
 
   GroupeEleve(int numeroGroupe, Cours cours) {
     this.numeroGroupe = numeroGroupe;
