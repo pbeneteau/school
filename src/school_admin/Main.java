@@ -22,6 +22,10 @@ public class Main {
 
         System.out.println(etudiant.toString());
 
+
+        DBM.init();
+        DBP.init();
+
     }
 
 
