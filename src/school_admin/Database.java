@@ -415,9 +415,7 @@ class Database {
         return true;
     }
 
-    static int creerIdentite(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue) {
-
-        int id = 404;
+    static boolean creerIdentite(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue) {
 
         try {
 
@@ -442,31 +440,23 @@ class Database {
 
             preparedStmt.execute();
 
-            query = "select id_identite from Identite where email = " + email;
+            return true;
 
-            Statement stmt= Database.connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            rs.first();
-
-            return rs.getInt("id_identite");
-
-        } catch (SQLException e) { System.out.println(e); return id; }
+        } catch (SQLException e) { System.out.println(e); return false; }
     }
 
     static boolean creerEtudiant(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, String password, int numeroGroupe) {
 
         try {
 
-            int identiteID = creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
+            creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
 
-            String query = "Insert into Etudiant (password, numero_groupe, id_identite) values (?,?,?)";
+            String query = "Insert into Etudiant(password, numero_groupe, id_identite) values (?,?,(select id_identite from Identite where tel = " + tel + "))";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             preparedStmt.setString(1, password);
             preparedStmt.setInt(2, numeroGroupe);
-            preparedStmt.setInt(3, identiteID);
 
             preparedStmt.execute();
 
@@ -479,14 +469,13 @@ class Database {
 
         try {
 
-            int identiteID = creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
+            creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
 
-            String query = "Insert into Professeur (id_identite, password) values (?,?)";
+            String query = "Insert into Professeur(id_identite, password) values (?,(select id_identite from Identite where tel = " + tel + "))";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
-            preparedStmt.setInt(1, identiteID);
-            preparedStmt.setString(2, password);
+            preparedStmt.setString(1, password);
 
             preparedStmt.execute();
 
