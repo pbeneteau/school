@@ -1,6 +1,7 @@
 package school_admin;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 @SuppressWarnings("Duplicates")
 
@@ -75,5 +76,71 @@ public class DBM {
         return true;
     }
 
+
+
+    static ArrayList<Cours> getCoursEtudiant(int matriculeEtudiant) {
+
+        ArrayList<Cours> cours = new ArrayList<>(); // Create an ArrayList cours
+
+        try {
+
+            String assisterQuery = "select note_de, note_pjr, note_tp, code_cours from Assister where matricule_etudiant = (?)";
+
+            PreparedStatement assisterStmt = DBM.connection.prepareStatement(assisterQuery);
+
+            assisterStmt.setInt(1, matriculeEtudiant);
+
+            ResultSet rsAssister = assisterStmt.executeQuery();
+
+            while (rsAssister.next()) {
+
+                int code = rsAssister.getInt("code_cours");
+                double noteDE = rsAssister.getDouble("note_de");
+                double noteTP = rsAssister.getDouble("note_tp");
+                double notePJR = rsAssister.getDouble("note_pjr");
+
+                String coursQuery = "select * from Cours where code_cours = (?)";
+
+                PreparedStatement coursStmt = DBM.connection.prepareStatement(coursQuery);
+
+                coursStmt.setInt(1, code);
+
+                ResultSet rsCours = coursStmt.executeQuery();
+
+                rsCours.first();
+
+                String nom = rsCours.getString("nom");
+                String description = rsCours.getString("description");
+                java.sql.Date date = rsCours.getDate("date");
+                float coefficient = rsCours.getFloat("coefficient");
+                float coefficientDE = rsCours.getFloat("coefficient_de");
+                float coefficientTP = rsCours.getFloat("coefficient_tp");
+                float coefficientProjet = rsCours.getFloat("coefficient_projet");
+
+                cours.add(new Cours(code, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet, noteDE, noteTP, notePJR));
+            }
+        } catch (SQLException e) { System.out.println(e); return null; }
+
+        return cours;
+    }
+
+
+    static ArrayList<String> getEtudiantPromotion(String promotion) {
+
+        ArrayList<String> ep = new ArrayList<>();
+
+        try {
+
+            Statement stmt = DBM.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select matricule_etudiant from Etudiant where promotion = " + promotion);
+
+            while(rs.next()) {
+
+                ep.add(rs.getString("matricule_etudiant"));
+            }
+            return ep;
+
+        } catch (SQLException e) { System.out.println(e); return null; }
+    }
 
 }
