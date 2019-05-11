@@ -28,7 +28,7 @@ class Database {
 
         try {
 
-            String query = "select * from Etudiant where matricule_etudiant = ?";
+            String query = "select * from Etudiant where matricule_etudiant = (?)";
 
             PreparedStatement stmt = Database.connection.prepareStatement(query);
 
@@ -64,6 +64,8 @@ class Database {
 
         try {
 
+            // je sais pas pk ca fonctionne pas
+            // String query = "select note_de, note_tp, note_pjr from Assister where " + matriculeEtudiant + "= matricule_etudiant";
             String query = "select note_de, note_tp, note_pjr from Assister where matricule_etudiant = (?)";
 
             PreparedStatement stmt = Database.connection.prepareStatement(query);
