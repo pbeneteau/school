@@ -415,7 +415,7 @@ class Database {
         return true;
     }
 
-    static boolean creerIdentite(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue) {
+    static private boolean creerIdentite(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue) {
 
         try {
 
@@ -471,7 +471,7 @@ class Database {
 
             creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
 
-            String query = "Insert into Professeur(id_identite, password) values (?,(select id_identite from Identite where tel = " + tel + "))";
+            String query = "Insert into Professeur(password, id_identite) values (?,(select id_identite from Identite where tel = " + tel + "))";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
