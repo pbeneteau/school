@@ -17,7 +17,7 @@ public class Cours {
   private double noteTP;
   private double noteProjet;
 
-  public Cours(int code, String nom, String description, Date date, double coefficient, double coefficientDe, double coefficientTp, double coefficientProjet, double noteDE, double noteTP, double noteProjet) {
+  Cours(int code, String nom, String description, Date date, double coefficient, double coefficientDe, double coefficientTp, double coefficientProjet, double noteDE, double noteTP, double noteProjet) {
     this.code = code;
     this.nom = nom;
     this.description = description;
