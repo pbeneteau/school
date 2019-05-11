@@ -50,35 +50,7 @@ public class DBP {
         return true;
     }
 
-    static boolean creerIndentite(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue) {
 
-
-        try {
-
-            // Creation d'un nouveau Cours
-            String query = "Insert into Identite(nom, prenom, sexe, photo, date_naissance, pays_naissance, ville_naissance, tel, email, ville, code_postal, numero_rue, nom_rue) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-
-            preparedStmt.setString(1, nom);
-            preparedStmt.setString(2, prenom);
-            preparedStmt.setString(3, String.valueOf(sexe));
-            preparedStmt.setBlob(4, photo);
-            preparedStmt.setDate(5, dateNaissance);
-            preparedStmt.setString(6, paysNaissance);
-            preparedStmt.setString(7, villeNaissance);
-            preparedStmt.setString(8, tel);
-            preparedStmt.setString(9, email);
-            preparedStmt.setString(10, ville);
-            preparedStmt.setString(11, codePostal);
-            preparedStmt.setString(12, numeroRue);
-            preparedStmt.setString(13, nomRue);
-
-            preparedStmt.execute();
-
-        } catch (SQLException e) { System.out.println(e); return false; }
-        return true;
-    }
 
 
 

@@ -415,4 +415,85 @@ class Database {
         return true;
     }
 
+    static int creerIdentite(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue) {
+
+        int id = 404;
+
+        try {
+
+            // Creation d'un nouveau Cours
+            String query = "Insert into Identite(nom, prenom, sexe, photo, date_naissance, pays_naissance, ville_naissance, tel, email, ville, code_postal, numero_rue, nom_rue) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setString(1, nom);
+            preparedStmt.setString(2, prenom);
+            preparedStmt.setString(3, String.valueOf(sexe));
+            preparedStmt.setBlob(4, photo);
+            preparedStmt.setDate(5, dateNaissance);
+            preparedStmt.setString(6, paysNaissance);
+            preparedStmt.setString(7, villeNaissance);
+            preparedStmt.setString(8, tel);
+            preparedStmt.setString(9, email);
+            preparedStmt.setString(10, ville);
+            preparedStmt.setString(11, codePostal);
+            preparedStmt.setString(12, numeroRue);
+            preparedStmt.setString(13, nomRue);
+
+            preparedStmt.execute();
+
+            query = "select id_identite from Identite where email = " + email;
+
+            Statement stmt= Database.connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            rs.first();
+
+            return rs.getInt("id_identite");
+
+        } catch (SQLException e) { System.out.println(e); return id; }
+    }
+
+    static boolean creerEtudiant(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, int password, int numeroGroupe) {
+
+        try {
+
+            int identiteID = creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
+
+            String query = "Insert into Etudiant (password, numero_groupe, id_identite) values (?,?,?)";
+
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setInt(1, password);
+            preparedStmt.setInt(2, numeroGroupe);
+            preparedStmt.setInt(3, identiteID);
+
+            preparedStmt.execute();
+
+        } catch (SQLException e) { System.out.println(e); return false; }
+
+        return true;
+    }
+
+    static boolean creerProfesseur(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, int password) {
+
+        try {
+
+            int identiteID = creerIdentite(nom, prenom, sexe, photo, dateNaissance, paysNaissance, villeNaissance, tel, email, ville, codePostal, numeroRue, nomRue);
+
+            String query = "Insert into Professeur (id_identite, password) values (?,?)";
+
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setInt(1, identiteID);
+            preparedStmt.setInt(2, password);
+
+            preparedStmt.execute();
+
+        } catch (SQLException e) { System.out.println(e); return false; }
+
+        return true;
+    }
+
+
 }

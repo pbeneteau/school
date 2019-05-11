@@ -76,22 +76,4 @@ public class DBM {
     }
 
 
-    static boolean creerProfesseur (int password, int id_identite) {
-
-        try {
-
-            String query = "Insert into Professeur (password) values (?)";
-
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-
-            preparedStmt.setInt(1, password);
-
-            preparedStmt.execute();
-
-        } catch (SQLException e) { System.out.println(e); return false; }
-
-        return true;
-    }
-
-
 }
