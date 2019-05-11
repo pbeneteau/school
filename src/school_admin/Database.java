@@ -474,13 +474,14 @@ class Database {
             stmt.setString(2, encryptedPass);
 
             ResultSet rs = stmt.executeQuery();
+            rs.next();
 
-            if (!rs.isBeforeFirst()) {
+            if (rs.wasNull()) {
                 System.out.println("[ERREUR] Mot de passe invalide !");
                 return false;
             } else {
                 System.out.println("[SUCCES] Connecté avec succes !");
-                Main.connectedUser = rs.getInt(0);
+                Main.connectedUser = rs.getInt(1);
                 Main.userRole = role;
                 return true;
             }

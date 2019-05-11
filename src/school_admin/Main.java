@@ -87,11 +87,10 @@ public class Main {
             password = key.nextLine();
 
             if (Database.login(login, password)) {
-
+                System.out.println("Matricule: " + connectedUser);
             }
 
         } while (userRole == null);
-
     }
 
 
