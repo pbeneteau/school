@@ -22,30 +22,6 @@ class Database {
         }
     }
 
-    static ArrayList<Administrateur> getAdmins() {
-
-        ArrayList<Administrateur> administrateurs = new ArrayList<>(); // Create an ArrayList admins
-
-        try {
-
-            Statement stmt = Database.connection.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from Administrateur");
-
-            while(rs.next()) {
-
-                int matricule = rs.getInt("numero_administateur");
-                String nom = rs.getString("nom");
-                String prenom = rs.getString("prenom");
-                String email = rs.getString("email");
-                String tel = rs.getString("tel");
-
-                administrateurs.add(new Administrateur(matricule, nom, prenom, tel, email));
-            }
-        } catch (SQLException e) { System.out.println(e); return null; }
-
-        return administrateurs;
-    }
-
     static Etudiant getEtudiant(int matriculeEtudiant) {
 
         Etudiant etudiant; // Create an ArrayList admins
@@ -82,24 +58,6 @@ class Database {
         } catch (SQLException e) { System.out.println(e); return null; }
 
         return etudiant;
-    }
-
-    static GroupeEleve getGroupe(int numeroGroupe) {
-
-        GroupeEleve groupe;
-
-        try {
-
-            Statement stmt = Database.connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from Groupe_eleve where " + numeroGroupe + "= numero_groupe");
-
-            rs.first();
-            Cours cours = getCours(rs.getInt("numero_cours"));
-            groupe = new GroupeEleve(numeroGroupe, cours);
-
-        } catch (SQLException e) { System.out.println(e); return null;}
-
-        return groupe;
     }
 
     static boolean getNotesEtudiant (int matriculeEtudiant) {
@@ -309,6 +267,27 @@ class Database {
         } catch (SQLException e) { System.out.println(e); return null; }
     }
 
+    static ArrayList<Integer> getMatriculeEtudiantsPromotion(String promotion) {
+
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        try {
+
+            PreparedStatement stmt = Database.connection.prepareStatement("select matricule_etudiant from Etudiant where promotion = ?");
+
+            stmt.setString(1, promotion);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+
+                ids.add(rs.getInt("matricule_etudiant"));
+            }
+            return ids;
+
+        } catch (SQLException e) { System.out.println(e); return null; }
+    }
+
     static boolean retirerEleveGroup() {
 
         try {
@@ -459,6 +438,82 @@ class Database {
         } catch (SQLException e) { System.out.println(e); return false; }
 
         return true;
+    }
+
+
+
+    static boolean login(int login, String pass) {
+
+        Utils.Role role = getUserRole(login);
+
+        if (role == null) {
+            System.out.println("[ERREUR] Identifiant incorrect.");
+            return false;
+        }
+
+        String encryptedPass = Utils.encryptPassword(pass);
+
+        try {
+
+            String query;
+
+            if (role == Utils.Role.etudiant) {
+                System.out.println("Connection en tant qu'Etudiant...");
+                query = "select matricule_etudiant from Etudiant where matricule_etudiant = ? and password =  ?";
+            } else if (role == Utils.Role.professeur) {
+                System.out.println("Connection en tant que Professeur...");
+                query = "select matricule_professeur from Professeur where matricule_professeur = ? and password =  ?";
+            } else {
+                System.out.println("Connection en tant qu'Administateur...");
+                query = "select numero_administrateur from Administrateur where numero_administrateur = ? and password =  ?";
+            }
+
+            PreparedStatement stmt = Database.connection.prepareStatement(query);
+
+            stmt.setInt(1, login);
+            stmt.setString(2, encryptedPass);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("[ERREUR] Mot de passe invalide !");
+                return false;
+            } else {
+                System.out.println("[SUCCES] Connecté avec succes !");
+                Main.connectedUser = rs.getInt(0);
+                Main.userRole = role;
+                return true;
+            }
+        } catch (SQLException e) { System.out.println(e); return false; }
+    }
+
+    private static Utils.Role getUserRole(int number) {
+
+        try {
+
+            Statement stmt = Database.connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery("select matricule_etudiant from Etudiant where matricule_etudiant =" + number);
+
+            if (rs.isBeforeFirst()) {
+                return Utils.Role.etudiant;
+            }
+
+            rs = stmt.executeQuery("select matricule_professeur from Professeur where matricule_professeur =" + number);
+
+            if (rs.isBeforeFirst()) {
+                return Utils.Role.professeur;
+            }
+
+            rs = stmt.executeQuery("select numero_administrateur from Administrateur where numero_administrateur =" + number);
+
+            if (rs.isBeforeFirst()) {
+                return Utils.Role.admin;
+            }
+
+        } catch (SQLException e) { System.out.println(e); return null; }
+
+        return null;
     }
 
 
