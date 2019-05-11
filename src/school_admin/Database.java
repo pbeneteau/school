@@ -454,7 +454,7 @@ class Database {
         } catch (SQLException e) { System.out.println(e); return id; }
     }
 
-    static boolean creerEtudiant(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, int password, int numeroGroupe) {
+    static boolean creerEtudiant(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, String password, int numeroGroupe) {
 
         try {
 
@@ -464,7 +464,7 @@ class Database {
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
-            preparedStmt.setInt(1, password);
+            preparedStmt.setString(1, password);
             preparedStmt.setInt(2, numeroGroupe);
             preparedStmt.setInt(3, identiteID);
 
@@ -475,7 +475,7 @@ class Database {
         return true;
     }
 
-    static boolean creerProfesseur(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, int password) {
+    static boolean creerProfesseur(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, String password) {
 
         try {
 
@@ -486,7 +486,7 @@ class Database {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             preparedStmt.setInt(1, identiteID);
-            preparedStmt.setInt(2, password);
+            preparedStmt.setString(2, password);
 
             preparedStmt.execute();
 
