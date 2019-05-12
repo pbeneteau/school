@@ -1,12 +1,9 @@
 package school_admin;
 
-import javax.xml.crypto.Data;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.sql.*;
 import java.util.ArrayList;
 
 @SuppressWarnings("Duplicates")
-
 class Database {
 
     private static Connection connection;
@@ -14,7 +11,6 @@ class Database {
     static boolean init() {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://35.233.50.222:3306/bdd?useSSL=false", "root", "poiuytre");
-            System.out.println("Connecté à la base de donnée.\n");
             return true;
         } catch (Exception e) {
             System.out.println("Erreur connection base de donnée: " + e + "\n");
@@ -34,7 +30,7 @@ class Database {
 
             stmt.setInt(1, matriculeEtudiant);
 
-            ResultSet rs=stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
             rs.first();
 
@@ -45,7 +41,7 @@ class Database {
             String paysNaissance = rs.getString("pays_naissance");
             String villeNaissance = rs.getString("ville_naissance");
             String photo = rs.getString("photo");
-            String numeroRue = rs.getString("numero_rue") ;
+            String numeroRue = rs.getString("numero_rue");
             String nomRue = rs.getString("nom_rue");
             String codePostale = rs.getString("code_postal");
             String ville = rs.getString("ville");
@@ -55,12 +51,15 @@ class Database {
             ArrayList<Cours> cours = getCoursEtudiant(matriculeEtudiant);
             etudiant = new Etudiant(matriculeEtudiant, nom, prenom, sexe, date_naissance, paysNaissance, villeNaissance, photo, numeroRue, nomRue, codePostale, ville, cours, tel, email);
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return etudiant;
     }
 
-    static boolean getNotesEtudiant (int matriculeEtudiant) {
+    static boolean getNotesEtudiant(int matriculeEtudiant) {
 
         try {
 
@@ -72,7 +71,10 @@ class Database {
             stmt.setInt(1, matriculeEtudiant);
             stmt.execute(query);
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
@@ -87,21 +89,48 @@ class Database {
             Statement stmt = Database.connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from Cours");
 
-            rs.first();
-            int code = rs.getInt("code_cours");
-            String nom = rs.getString("nom");
-            String description = rs.getString("description");
-            java.sql.Date date = rs.getDate("date");
-            double coefficient = rs.getFloat("coefficient");
-            double coefficientDE = rs.getFloat("coefficient_de");
-            double coefficientTP = rs.getFloat("coefficient_tp");
-            double coefficientProjet = rs.getFloat("coefficient_projet");
+            while (rs.next()) {
 
-            cours.add(new Cours(code, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet));
+                int code = rs.getInt("code_cours");
+                String nom = rs.getString("nom");
+                String description = rs.getString("description");
+                java.sql.Date date = rs.getDate("date");
+                double coefficient = rs.getFloat("coefficient");
+                double coefficientDE = rs.getFloat("coefficient_de");
+                double coefficientTP = rs.getFloat("coefficient_tp");
+                double coefficientProjet = rs.getFloat("coefficient_projet");
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+                cours.add(new Cours(code, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return cours;
+    }
+
+    static ArrayList<Integer> getAllGroupes() {
+
+        ArrayList<Integer> groupes = new ArrayList<>();
+
+        try {
+
+            Statement stmt = Database.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select numero_etudiant from Etudiant");
+
+            while (rs.next()) {
+                int code = rs.getInt(1);
+                groupes.add(code);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+
+        return groupes;
     }
 
     static Cours getCours(int codeCours) {
@@ -124,7 +153,10 @@ class Database {
 
             cours = new Cours(codeCours, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet);
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return cours;
     }
@@ -171,7 +203,10 @@ class Database {
 
                 cours.add(new Cours(code, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet, noteDE, noteTP, notePJR));
             }
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return cours;
     }
@@ -182,15 +217,15 @@ class Database {
 
         try {
 
-            Statement stmt= Database.connection.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from Professeur");
+            Statement stmt = Database.connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from Professeur");
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int matricule = rs.getInt("matricule_professeur");
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
-                String numeroRue = rs.getString("numero_rue") ;
+                String numeroRue = rs.getString("numero_rue");
                 String nomRue = rs.getString("nom_rue");
                 String codePostal = rs.getString("code_postal");
                 String ville = rs.getString("ville");
@@ -199,7 +234,10 @@ class Database {
 
                 professeurs.add(new Professeur(matricule, nom, prenom, numeroRue, nomRue, codePostal, ville, tel, email));
             }
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return professeurs;
     }
@@ -214,22 +252,25 @@ class Database {
             Statement stmt = Database.connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from Personne_responsable");
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 int num = rs.getInt("numero_pr");
                 String prenom = rs.getString("prenom");
                 String nom = rs.getString("nom");
                 String email = rs.getString("email");
                 String tel = rs.getString("tel");
-                String numeroRue = rs.getString("numero_rue") ;
+                String numeroRue = rs.getString("numero_rue");
                 String nomRue = rs.getString("nom_rue");
                 String ville = rs.getString("ville");
                 String pays = rs.getString("pays");
                 String codePostal = rs.getString("code_postal");
 
-                personneResponsables.add(new PersonneResponsable(num,  prenom,  nom,  email,  tel,  numeroRue,  nomRue,  ville,  pays, codePostal));
+                personneResponsables.add(new PersonneResponsable(num, prenom, nom, email, tel, numeroRue, nomRue, ville, pays, codePostal));
             }
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return personneResponsables;
     }
@@ -247,7 +288,10 @@ class Database {
 
             preparedStmt.executeUpdate();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
         return true;
     }
 
@@ -260,13 +304,16 @@ class Database {
             Statement stmt = Database.connection.createStatement();
             ResultSet rs = stmt.executeQuery("select matricule_etudiant from Etudiant where numero_groupe =" + numeroGroupe);
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 ids.add(rs.getInt("matricule_etudiant"));
             }
             return ids;
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     static ArrayList<Integer> getMatriculeEtudiantsPromotion(String promotion) {
@@ -281,13 +328,16 @@ class Database {
 
             ResultSet rs = stmt.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 ids.add(rs.getInt("matricule_etudiant"));
             }
             return ids;
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     static boolean retirerEleveGroup() {
@@ -299,11 +349,13 @@ class Database {
 
             preparedStmt.executeUpdate();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
-
 
 
     static boolean creerCours(String nom, String description, java.sql.Date date, double coefficient, double coefficentDE, double coefficientTP, double coefficientProjet, int matriculeProfesseur) {
@@ -312,7 +364,7 @@ class Database {
 
             // Creation d'un nouveau Cours
             String query = " Insert into Cours(nom, description, date, coefficient, coefficient_de, coefficient_tp, coefficient_projet, matricule_professeur)"
-                    + " values (?, ?, ?, ?, ?, ?, ?, (select matricule_professeur from Professeur where matricule_professeur =" + matriculeProfesseur+ "))";
+                    + " values (?, ?, ?, ?, ?, ?, ?, (select matricule_professeur from Professeur where matricule_professeur =" + matriculeProfesseur + "))";
 
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
@@ -326,7 +378,10 @@ class Database {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
@@ -347,7 +402,10 @@ class Database {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
@@ -368,7 +426,10 @@ class Database {
 
             preparedStmt.executeUpdate();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
@@ -400,7 +461,10 @@ class Database {
 
             return true;
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     static boolean creerEtudiant(String nom, String prenom, char sexe, java.sql.Blob photo, java.sql.Date dateNaissance, String paysNaissance, String villeNaissance, String tel, String email, String ville, String codePostal, String numeroRue, String nomRue, String password, int numeroGroupe) {
@@ -418,7 +482,10 @@ class Database {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
@@ -437,11 +504,13 @@ class Database {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
-
 
 
     static boolean login(int login, String pass) {
@@ -487,7 +556,10 @@ class Database {
                 Main.userRole = role;
                 return true;
             }
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     private static Utils.Role getUserRole(int number) {
@@ -514,7 +586,10 @@ class Database {
                 return Utils.Role.admin;
             }
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return null;
     }

@@ -45,15 +45,13 @@ public class DBP {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
-
-
-
-
-
 
 
 }

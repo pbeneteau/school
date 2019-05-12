@@ -5,13 +5,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class Utils {
 
-    public enum Role {
-        etudiant,
-        professeur,
-        admin
-    }
-
-
     public static String encryptPassword(String password) {
 
         String encryptedPassword = null;
@@ -39,5 +32,15 @@ public class Utils {
 
         System.out.println(encryptedPassword);
         return encryptedPassword;
+    }
+
+    public static double roundUp(double d) {
+        return d > (int) d ? (int) d + 1 : d;
+    }
+
+    public enum Role {
+        etudiant,
+        professeur,
+        admin
     }
 }

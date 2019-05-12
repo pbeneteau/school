@@ -21,7 +21,7 @@ public class DBM {
         }
     }
 
-    static boolean creerGroupe (int numero_cours) {
+    static boolean creerGroupe(int numero_cours) {
 
         try {
 
@@ -34,14 +34,16 @@ public class DBM {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
 
 
-
-    static boolean ajouterCoursGroupe (int numeroGroupe, int numeroCours) {
+    static boolean ajouterCoursGroupe(int numeroGroupe, int numeroCours) {
 
         try {
 
@@ -53,13 +55,16 @@ public class DBM {
 
             preparedStmt.execute();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
 
         return true;
     }
 
 
-    static boolean changerEleveGroup (int matricule_etudiant, int numero_groupe) {
+    static boolean changerEleveGroup(int matricule_etudiant, int numero_groupe) {
 
         try {
 
@@ -72,10 +77,12 @@ public class DBM {
 
             preparedStmt.executeUpdate();
 
-        } catch (SQLException e) { System.out.println(e); return false; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
         return true;
     }
-
 
 
     static ArrayList<Cours> getCoursEtudiant(int matriculeEtudiant) {
@@ -119,7 +126,10 @@ public class DBM {
 
                 cours.add(new Cours(code, nom, description, date, coefficient, coefficientDE, coefficientTP, coefficientProjet, noteDE, noteTP, notePJR));
             }
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
 
         return cours;
     }
@@ -134,13 +144,16 @@ public class DBM {
             Statement stmt = DBM.connection.createStatement();
             ResultSet rs = stmt.executeQuery("select matricule_etudiant from Etudiant where promotion = " + promotion);
 
-            while(rs.next()) {
+            while (rs.next()) {
 
                 ep.add(rs.getString("matricule_etudiant"));
             }
             return ep;
 
-        } catch (SQLException e) { System.out.println(e); return null; }
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
 }
